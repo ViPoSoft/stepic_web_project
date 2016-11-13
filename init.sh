@@ -8,5 +8,5 @@ sudo /etc/init.d/nginx restart
 sudo -s ln -sf /home/box/web/etc/hello.py  /etc/gunicorn.d/hello.py
 #sudo ln -sf /home/box/web/etc/hello.py  /etc/gunicorn.d/hello.py
 #sudo gunicorn -c hello.py hello:app &
-gunicorn -с /etc/gunicorn.d/hello.py hello
+sudo gunicorn -с /etc/gunicorn.d/hello.py hello
 sudo /etc/init.d/gunicorn restart
