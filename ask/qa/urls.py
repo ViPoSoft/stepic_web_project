@@ -6,7 +6,8 @@ urlpatterns = [
     ##Examples:
     #url(r'^$', views.index, name='index'),
     #url(r'^popular/.*$', views.popular, name='popular'),    
-    url(r'^ask/.*$', views.ask, name='ask'),
+    #url(r'^ask/.*$', views.ask, name='ask'),
+    url(r'^ask/.*$', views.test, name='test'),
     #url(r'^answer/.*$', views.answer, name='answer'),
     #url(r'^signup/.*$', views.user_signup, name='signup'),
     #url(r'^login/.*$', views.user_login, name='login'),
