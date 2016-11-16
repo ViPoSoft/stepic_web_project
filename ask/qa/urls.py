@@ -14,5 +14,5 @@ urlpatterns = [
     #url(r'^new/.*$', views.test), 
     ## url(r'^$', 'ask.views.home', name='home'),
     ## url(r'^blog/', include('blog.urls')),
-    url(r'^question/$', views.test name='test'),
+    url(r'^question/$', views.test, name='test'),
 ]	
