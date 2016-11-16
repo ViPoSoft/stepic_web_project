@@ -6,7 +6,7 @@ urlpatterns = [
     ##Examples:
     #url(r'^$', views.index, name='index'),
     #url(r'^popular/.*$', views.popular, name='popular'),    
-    url(r'^ask/.*$', views.ask, name='ask'),
+    url(r'^ask/.*$', views.test),
     #url(r'^answer/.*$', views.answer, name='answer'),
     #url(r'^signup/.*$', views.user_signup, name='signup'),
     #url(r'^login/.*$', views.user_login, name='login'),
@@ -14,5 +14,5 @@ urlpatterns = [
     #url(r'^new/.*$', views.test), 
     ## url(r'^$', 'ask.views.home', name='home'),
     ## url(r'^blog/', include('blog.urls')),
-    url(r'^(?P<question_id>[0-9]+)/$', views.test, name='question'),
+    url(r'^(?P<question_id>[0-9]+)/$', views.test),
 ]	
