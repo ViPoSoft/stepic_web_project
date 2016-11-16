@@ -1,8 +1,8 @@
 #from django.conf.urls import patterns, include, url
-from django.conf.urls import  url
-from . import views
+#from django.conf.urls import  url
+#from . import views
 
-urlpatterns = [
+#urlpatterns = [
     ##Examples:
     #url(r'^$', views.index, name='index'),
     #url(r'^popular/.*$', views.popular, name='popular'),    
@@ -14,5 +14,5 @@ urlpatterns = [
     #url(r'^new/.*$', views.test), 
     ## url(r'^$', 'ask.views.home', name='home'),
     ## url(r'^blog/', include('blog.urls')),
-    url(r'^question/$', views.test, name='test'),
-]	
+    #url(r'^question/$', views.test, name='test'),
+#]	
