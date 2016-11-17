@@ -1,21 +1,21 @@
 
-#sudo rm /etc/nginx/sites-enabled/test.conf
-# symbolic link to nginx config
-sudo ln -s /home/box/web/etc/nginx.conf /etc/nginx/sites-enabled/test.conf
+#!/bin/bash ( иногда терминал отрабатывае ошибку на удаление 
 
-sudo rm /etc/nginx/sites-enabled/default
+if [ -f /etc/nginx/sites-enabled/default ]; then
+  sudo rm /etc/nginx/sites-enabled/default
+fi
+# лишнее но пусть будет
+if [ -f /etc/nginx/sites-enabled/default ]; then
+  sudo rm /etc/nginx/sites-enabled/test.conf
+fi
+
+# symbolic link to nginx config
+sudo ln -sf /home/box/web/etc/nginx.conf /etc/nginx/sites-enabled/test.conf
 
 sudo /etc/init.d/nginx restart
 
 # symbolic links to gunicorn configs
-sudo ln -sf /home/box/web/etc/hello.py  /etc/gunicorn.d/hello.py
-sudo ln -sf /home/box/web/etc/django-gunicorn.conf /etc/gunicorn.d/django-gunicorn.conf
-
-sudo unlink /etc/gunicorn.d/django
-sudo ln -s /home/box/web/etc/django /etc/gunicorn.d/django
-
-# run gunicorn server
-#sudo gunicorn -u nobody /etc/gunicorn.d/hello.py hello:app
-#sudo gunicorn -u nobody /etc/gunicorn.d/django-gunicorn.conf ask.wsgi:application
+sudo ln -sf /home/box/web/etc/gunicorn_hello.conf /etc/gunicorn.d/test
+sudo ln -sf /home/box/web/etc/gunicorn_ask.conf /etc/gunicorn.d/ask
 
 sudo /etc/init.d/gunicorn restart
