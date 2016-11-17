@@ -1,18 +1,17 @@
-def app(environ, start_response):
+from urlparse import parse_qs
 
-	
-	raw_uri = str(environ.get('RAW_URI'))
-	
-	raw_uri = raw_uri[2:]
 
-	params = raw_uri.split('&')
-	
-	data = ''
-	for param in params:
-		data += param + '\r\n'
-	
-	start_response("200 OK", [
-	  ("Content-Type", "text/plain"),
-	  ("Content-Length", str(len(data)))
-	])
-	return iter([data])
+def application(environ, start_response):
+    query = parse_qs(environ['QUERY_STRING'], keep_blank_values=True)
+    body = []
+    for key, value in query.items():
+        for item in value:
+            body.append(key + "=" + item + "\r\n")
+
+    status = '200 OK'
+    headers = [
+        ('Content-Type', 'text/plain')
+    ]
+
+    start_response(status, headers)
+return body
