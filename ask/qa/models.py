@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# менеджер модели Question
 class QuestionManager(models.Manager):
     def new(self):
         from django.db import connection
@@ -17,7 +16,6 @@ class QuestionManager(models.Manager):
         popular_questions = cursor.fetchall()
         return popular_questions
 
-# определяю модели
 
 class Question(models.Model):
     title = models.CharField(max_length=125)
