@@ -18,6 +18,7 @@ class QuestionManager(models.Manager):
 
 
 class Question(models.Model):
+    objects = QuestionManager() 
     title = models.CharField(max_length=125)
     text = models.TextField(default="")
     added_at = models.DateTimeField(auto_now_add=True)
