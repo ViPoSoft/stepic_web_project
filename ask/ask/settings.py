@@ -65,7 +65,7 @@ WSGI_APPLICATION = 'ask.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'base23',
+        'NAME': 'step_base',
         'USER': 'vipo',
         'PASSWORD': 'vps23',
         #'HOST': '127.0.0.1',
