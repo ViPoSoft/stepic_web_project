@@ -10,7 +10,7 @@ class Question(models.Model):
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     likes = models.ManyToManyField(User, related_name="q_to_likes")
     
-    def __str__(self):
+    def __unicode__(self):
         return self.title
 
     def get_url(self):
@@ -24,5 +24,5 @@ class Answer(models.Model):
     #author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     author = models.ForeignKey(User)
     
-    def __str__(self):
+    def __unicode__(self):
         return self.text
