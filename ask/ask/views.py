@@ -1,13 +1,16 @@
-#from django.shortcuts import render
+from django.shortcuts import render
 #from django.http import HttpResponse 
 #
 #def test(request, *args, **kwargs):
 #return HttpResponse('OK')
 
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpRequest, HttpResponse, HttpResponseNotFound
 
-def ktotam(request):
-    return HttpResponse("Found!")
+#def ktotam(request):
+#    return HttpResponse("Found!")
+
+def ktotam(request, *args, **kwargs):
+    return HttpResponse('OK')
 
 def nicogodomanet(request):
 return HttpResponseNotFound("Not Found!")
