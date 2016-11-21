@@ -1,11 +1,12 @@
 from django.conf.urls import patterns, include, url
 #from django.contrib import admin
 #from . import views
-from qa.views import test
+from django.conf.urls import url
+from qa.views import question
 
-urlpatterns = patterns('',
-    url(r'^question/\d+/', test, name='question'),
-)
+urlpatterns = [
+    url(r'^(?P<num>\d+)/$', question ),
+]
 #urlpatterns = [
     ## druga sproba
     #url(r'^$', views.test, name='test'), 
