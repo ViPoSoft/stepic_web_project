@@ -14,5 +14,5 @@ urlpatterns = [
     url(r'^new/', 'views.ktotam'),
     url(r'^question/', include('qa.urls')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^', 'views.'views.nicogodomanet'),                   
+    url(r'^', 'views.nicogodomanet'),                   
 }
