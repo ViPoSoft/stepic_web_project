@@ -13,4 +13,4 @@ sudo ln -sf /home/box/web/etc/nginx.conf /etc/nginx/sites-enabled/test.conf
 
 sudo /etc/init.d/nginx restart
 
-python manage.py runserver 0.0.0.0:8000
+#python manage.py runserver 0.0.0.0:8000
