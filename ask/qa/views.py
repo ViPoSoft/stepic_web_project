@@ -1,51 +1,90 @@
-from django.shortcuts import render
-from django.http import HttpResponse, Http404
-from django.core.paginator import Paginator
-
-from qa.models import Question, Answer
-
+from django.shortcuts import render, get_object_or_404
+from django.views.decorators.http import require_GET
+from .models import Question, Answer
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import Http404
 
 # Create your views here.
+from django.http import HttpResponse 
 
-def question(request, num,):
+@require_GET
+def index(request, *args, **kwargs):
+    # list of questions in desc order by publication datetime
+    question_list = Question.objects.order_by('-added_at')
+
+    # pagination
     try:
-        q = Question.objects.get(id=num)
-    except Question.DoesNotExist:
+        limit = int(request.GET.get('limit', 10))
+    except ValueError:
+        limit = 10
+
+    if limit > 100:
+        limit = 10
+
+    paginator = Paginator(question_list, limit)
+        
+    try:
+        page = int(request.GET.get('page', 1))
+    except ValueError:
         raise Http404
-    return render(request, 'question.html', {'question': q, })
-
-
-def index(request):
+    
     try:
-        page = int(request.GET.get("page"))
-    except ValueError:
-        page = 1
-    except TypeError:
-        page = 1
-    questions = Question.objects.all().order_by('-id')
-    paginator = Paginator(questions, 10)
-    page = paginator.page(page)
+        questions = paginator.page(page)
+    except EmptyPage:
+        questions = paginator.page(paginator.num_pages)
+    
+    context = {
+        'questions': questions,
+        'paginator': paginator,
+        'limit': limit,
+    }
+    return render(request, 'qa/index.html', context)
 
-    return render(request, 'list.html',
-                  {'title': 'Latest',
-                   'paginator': paginator,
-                   'questions': page.object_list,
-                   'page': page, })
+@require_GET
+def popular(request, *args, **kwargs):
+    # list of questions in desc order by rating
+    question_list = Question.objects.order_by('-rating')
 
-
-def popular(request):
+    # pagination
     try:
-        page = int(request.GET.get("page"))
+        limit = int(request.GET.get('limit', 10))
     except ValueError:
-        page = 1
-    except TypeError:
-        page = 1
-    questions = Question.objects.all().order_by('-rating')
-    paginator = Paginator(questions, 10)
-    page = paginator.page(page)
+        limit = 10
 
-    return render(request, 'list.html',
-                  {'title': 'Popular',
-                   'paginator': paginator,
-                   'questions': page.object_list,
-'page': page, })
+    if limit > 100:
+        limit = 10
+
+    paginator = Paginator(question_list, limit)
+        
+    try:
+        page = int(request.GET.get('page', 1))
+    except ValueError:
+        raise Http404
+    
+    try:
+        questions = paginator.page(page)
+    except EmptyPage:
+        questions = paginator.page(paginator.num_pages)
+    
+    context = {
+        'questions': questions,
+        'paginator': paginator,
+        'limit': limit,
+    }
+    return render(request, 'qa/popular.html', context)
+
+
+def test(request, *args, **kwargs):
+    context = {'var1': 1, 'var2': 2}
+    return render(request, 'qa/index.html', context)
+    #return HttpResponse('OK')
+
+def question(request, question_id):
+    q = get_object_or_404(Question, id=question_id)
+    a = Answer.objects.filter(question=q.id).order_by('-added_at')
+    
+    context = {
+        'question': q,
+        'answers': a,
+    }
+return render(request, 'qa/question.html', context) 
