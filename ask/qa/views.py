@@ -10,7 +10,7 @@ from django.http import HttpResponse
 @require_GET
 def index(request, *args, **kwargs):
     # list of questions in desc order by publication datetime
-    question_list = Question.objects.all().order_by('-added_at')
+    question_list = Question.objects.order_by('-added_at')
 
     # pagination
     try:
@@ -43,7 +43,7 @@ def index(request, *args, **kwargs):
 @require_GET
 def popular(request, *args, **kwargs):
     # list of questions in desc order by rating
-    question_list = Question.objects.all().order_by('-rating')
+    question_list = Question.objects.order_by('-rating')
 
     # pagination
     try:
