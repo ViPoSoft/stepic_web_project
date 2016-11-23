@@ -1,14 +1,16 @@
-from django.conf.urls import url, include
+from django.conf.urls import patterns, include, url
+#from django.conf.urls import url, include
+#from django.contrib import admin
+#from . import views
 from django.contrib import admin
-
-from . import views
+admin.autodiscover()
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
-    url(r'^popular/.*$', views.popular, name='popular'),    
-    url(r'^login/.*$', views.test),
-    url(r'^signup/.*$', views.test),
-    url(r'^ask/.*$', views.test),
-    url(r'^new/.*$', views.test),
-    url(r'^question/(?P<question_id>[0-9]+)/$', views.question, name='question'),    
+    url(r'^$', 'qa.views.newqa'),
+    url(r'^login/$', 'qa.views.proba'),
+    url(r'^signup/$', 'qa.views.proba'),
+    url(r'^question/(?P<qid>\d+)/', 'qa.views.question'),
+    url(r'^ask/$', 'qa.views.proba'),
+    url(r'^popular/$', 'qa.views.popular'),
+    url(r'^new/$', 'qa.views.proba'),       
 ]
