@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+<p>{{question.title}}
+<p>{{question.text}}
+<hr>
+
+<h3>Answers:</h3>
+<ul>
+{% for answer in answers %}
+  <li>{{ answer.text }}</li>
+{% endfor %}
+</ul>
+<hr>
+
+</body>
+</html>
