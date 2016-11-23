@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+<body>
+<p>New Questions
+{% for q in questions %}
+  <a href="question/{{q.id}}/">{{q.title}}</a>
+{% endfor %}
+
+</body>
+</html>
