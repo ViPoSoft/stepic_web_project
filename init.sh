@@ -22,7 +22,7 @@ sudo /etc/init.d/nginx restart
 # symbolic links to gunicorn configs
 #sudo ln -sf /home/box/web/etc/gunicorn_hello.conf /etc/gunicorn.d/test
 #sudo ln -sf /home/box/web/etc/gunicorn_ask.conf /etc/gunicorn.d/ask
-sudo ln -s /home/box/web/etc/ask.py /etc/gunicorn.d/ask.py
+sudo ln -s /home/box/web/etc/gunicorn_ask.conf /etc/gunicorn.d/ask.py
 sudo /etc/init.d/gunicorn restart
 
 python /home/box/web/ask/manage.py syncdb
