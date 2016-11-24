@@ -1,14 +1,62 @@
-from django.template import loader, Context, RequestContext
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseRedirect
+from django.http import Http404
+from qa.models import Question, Answer
+from qa.forms import AskForm, AnswerForm
 
-from django.shortcuts import render, get_object_or_404
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+def proba(request, *args, **kwargs):
+        return HttpResponse('OK')
 
-from models import Question, User
-from forms import AskForm, AnswerFor
+def index(request) :
+	pageLimit = 10
+	#Entry.objects.order_by(Coalesce('summary', 'headline').desc()) #asc()
+	qwests = Question.objects.all().order_by('-id')
+	
+	from django.core.paginator import Paginator
+	
+	page = request.GET.get('page') or 1
+	try :
+		page = int(page)
+	except ValueError :
+		page = 1
+	paginator = Paginator(qwests, pageLimit)
+	paginator.baseurl = '/?page='
+	try :
+		page = paginator.page(page)
+	except EmptyPage :
+		page = paginator.page(paginator.num_pages)
+	return render(request, 'questionList.html', {
+		'title' : 'qwests and answers',
+		'list' : page.object_list,
+		'paginator' : paginator, 
+		'page' : page,
+	})
+	
 
-def proba(request):
-    return HttpResponse('OK')
+def popular(request) :
+	pageLimit = 10
+	#Entry.objects.order_by(Coalesce('summary', 'headline').desc()) #asc()
+	qwests = Question.objects.all().order_by('-likes')
+	
+	from django.core.paginator import Paginator
+	
+	page = request.GET.get('page') or 1
+	try :
+		page = int(page)
+	except ValueError :
+		page = 1
+	paginator = Paginator(qwests, pageLimit)
+	paginator.baseurl = '/?page='
+	try :
+		page = paginator.page(page)
+	except EmptyPage :
+		page = paginator.page(paginator.num_pages)
+	return render(request, 'questionList.html', {
+		'title' : 'popular quests',
+		'list' : page.object_list,
+		'paginator' : paginator, 
+		'page' : page,
+	})
 
 def question(request, quest_id) :
 	try :
@@ -25,42 +73,10 @@ def question(request, quest_id) :
 		'question' : quest,
 		'list' : answers,
 		'form' : form,
-})
+	})
 
-def newqa(request):
-    qmain = Question.objects.all().order_by('-id')
-    
-    paginator = Paginator(qmain, 10)
-    page = request.GET.get('page')
-    try:
-        qmain = paginator.page(page)
-    except PageNotAnInteger:
-        qmain = paginator.page(1)
-    except EmptyPage:
-        qmain = paginator.page(paginator.num_pages)
-    
-    t = loader.get_template("new.html")
-    c = Context({'questions':qmain, 'request':request})
-    return HttpResponse(t.render(c))
-
-def popular(request):
-    qmain = Question.objects.all().order_by('-rating')
-    
-    paginator = Paginator(qmain, 10)
-    page = request.GET.get('page')
-    try:
-        qmain = paginator.page(page)
-    except PageNotAnInteger:
-        qmain = paginator.page(1)
-    except EmptyPage:
-        qmain = paginator.page(paginator.num_pages)
-    
-    t = loader.get_template("popular.html")
-    c = Context({'questions':qmain, 'request':request})
-    return HttpResponse(t.render(c))
-   
-def askfrm(request):
-    if request.method == "POST" :
+def ask(request) :
+	if request.method == "POST" :
 		print("POST!!!!!!!!!!!!!!!!!!!!!!!!!")
 		form = AskForm(request.POST)
 		if form.is_valid():
@@ -74,12 +90,12 @@ def askfrm(request):
 		form = AskForm()
 	return render(request, 'ask_add.html', {
 		'form' : form
-})
-
-def answerfrm(request):
-    if request.method == "POST" :
+	})
+	
+def answer(request) :
+	if request.method == "POST" :
 		form = AnswerForm(request.POST)
 		if form.is_valid():
 			answer = form.save()
 			url = '/question/' + form.question
-            return HttpResponseRedirect(url)
+return HttpResponseRedirect(url)
