@@ -9,18 +9,18 @@ from django.contrib.auth.models import User
 #        return self.objects.all().order_by('-rating')
 
 class Question(models.Model):
-    title = models.CharField(max_length=64)
+    title = models.CharField(max_length=255)
     text = models.TextField()
     added_at = models.DateField(auto_now_add=True)
     rating = models.IntegerField(default = 0)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    likes = models.ManyToManyField(User, related_name='question_like_user')
+    author = models.ForeignKey(User, related_name='+', default=1)
+    likes = models.ManyToManyField(User, default=1)
     
-    #qobjects = models.Manager()
-    #objects = QuestionManager()
+    def get_absolute_url(self) :
+return '/question/%d/' % self.pk
 
-    def __unicode__(self):
-        return self.title
+    #def __unicode__(self):
+     #   return self.title
     
     #def get_url(self):
     #    return reverse('questions', kwargs={'id': self.id})
@@ -28,8 +28,8 @@ class Question(models.Model):
 class Answer(models.Model):
     text = models.TextField()
     added_at = models.DateField(auto_now_add=True)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)  
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, null=False, on_delete=models.DO_NOTHING)
+    author = models.ForeignKey(User, related_name='+', default=1)
 
-    def __unicode__(self):
-        return self.title
+    #def __unicode__(self):
+    #    return self.title
