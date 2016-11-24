@@ -8,10 +8,13 @@ def proba(request):
     return HttpResponse('OK')
 
 def question(request, qid):
-    question = get_object_or_404(Question, id=qid)
-    return render(request, 'question.html', {
-        'question': question,
-        'answers': question.answer_set.all()
+    if request.method == "POST":
+        return HttpResponse('OK')
+    else
+        question = get_object_or_404(Question, id=qid)
+        return render(request, 'question.html', {
+            'question': question,
+            'answers': question.answer_set.all()
         })
 
 def newqa(request):
