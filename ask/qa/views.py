@@ -1,13 +1,10 @@
 from django.template import loader, Context, RequestContext
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from models import Question, User, Answer
-from django.views.decorators.http import require_GET
-from .forms import AskForm, AnswerForm, LoginForm, SignupForm
-from django.core.urlresolvers import reverse
-from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse 
+from models import Question, User
+from forms import AskForm, AnswerForm
+
 
 def proba(request):
     return HttpResponse('OK')
@@ -16,12 +13,12 @@ def question(request, question_id):
     if request.method == 'POST':
         return answer(request)
     
-    q = get_object_or_404(Question, id=question_id)
-    a = Answer.objects.filter(question=q.id).order_by('-added_at')
-    user = request.user
-    form = AnswerForm(initial = {'question': question_id})
-    context = {'question': q, 'answers': a, 'form': form, }
-return render(request, 'question.html', context) 
+question = get_object_or_404(Question, id=qid)
+    return render(request, 'question.html', {
+        'question': question,
+        'answers': question.answer_set.all()
+        })
+
 
 def newqa(request):
     qmain = Question.objects.all().order_by('-id')
