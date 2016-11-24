@@ -5,7 +5,7 @@
     <title>answer!</title>
 </head>
 <body>
-    <form method="post" action="/answerfrm/">
+    <form method="post" action="/answer/">
         <fieldset>
 {% csrf_token %}
 {{ form.as_p }}
