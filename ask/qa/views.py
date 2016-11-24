@@ -69,5 +69,5 @@ def answer(request):
             return HttpResponseRedirect(url)
     else:
         form = answerForm()
-    return render(request, 'answer.html', {'form': form, })
+#    return render(request, 'answer.html', {'form': form, })
 
