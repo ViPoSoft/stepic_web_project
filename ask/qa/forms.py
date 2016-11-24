@@ -4,9 +4,12 @@ from .models import Question, Answer
 
 class AskForm(forms.ModelForm):
     class Meta:
-    fields = ('title', 'text',)
+        model = Question
+        fields = ('title', 'text',)
     
 class AnswerForm(forms.ModelForm):
     class Meta:
-    fields = ('text','question',)
+        model = Answer
+        fields = ('text','question',)
+        
     
