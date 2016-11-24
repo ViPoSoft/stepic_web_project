@@ -2,7 +2,12 @@ from django.template import loader, Context, RequestContext
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from models import Question, User
+from models import Question, User, Answer
+from django.views.decorators.http import require_GET
+from .forms import AskForm, AnswerForm, LoginForm, SignupForm
+from django.core.urlresolvers import reverse
+from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponse 
 
 def proba(request):
     return HttpResponse('OK')
