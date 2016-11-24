@@ -46,7 +46,7 @@ def popular(request):
     c = Context({'questions':qmain, 'request':request})
     return HttpResponse(t.render(c))
    
-def askfrm(request):
+def ask(request):
     if request.method == "POST":
         form = askForm(request.POST)
         if form.is_valid():
@@ -55,9 +55,9 @@ def askfrm(request):
             return HttpResponseRedirect(url)
     else:
         form = askForm()
-    return render(request, 'askfrm.html', {'form': form, })
+    return render(request, 'ask.html', {'form': form, })
 
-def answerfrm(request):
+def answer(request):
     if request.method == "POST":
         form = answerForm(request.POST)
         if form.is_valid():
@@ -66,5 +66,5 @@ def answerfrm(request):
             return HttpResponseRedirect(url)
     else:
         form = answerForm()
-    return render(request, 'answerfrm.html', {'form': form, })
+    return render(request, 'answer.html', {'form': form, })
 
