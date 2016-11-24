@@ -7,15 +7,16 @@ from models import Question, User
 def proba(request):
     return HttpResponse('OK')
 
-def question(request, qid):
-    if request.method == "POST":
+def question(request, question_id):
+    if request.method == 'POST':
         return answer(request)
-    else
-        question = get_object_or_404(Question, id=qid)
-        return render(request, 'question.html', {
-            'question': question,
-            'answers': question.answer_set.all()
-        })
+    
+    q = get_object_or_404(Question, id=question_id)
+    a = Answer.objects.filter(question=q.id).order_by('-added_at')
+    user = request.user
+    form = AnswerForm(initial = {'question': question_id})
+    context = {'question': q, 'answers': a, 'form': form, }
+return render(request, 'question.html', context) 
 
 def newqa(request):
     qmain = Question.objects.all().order_by('-id')
