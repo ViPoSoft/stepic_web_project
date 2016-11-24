@@ -17,7 +17,7 @@ class Question(models.Model):
     likes = models.ManyToManyField(User, default=1)
     
     def get_absolute_url(self) :
-return '/question/%d/' % self.pk
+        return '/question/%d/' % self.pk
 
     #def __unicode__(self):
      #   return self.title
