@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http import Http404
-from qa.models import Question, Answer
-from qa.forms import AskForm, AnswerForm
+from models import Question, Answer
+from forms import AskForm, AnswerForm
 
 def proba(request, *args, **kwargs):
         return HttpResponse('OK')
@@ -98,4 +98,4 @@ def answer(request) :
 		if form.is_valid():
 			answer = form.save()
 			url = '/question/' + form.question
-return HttpResponseRedirect(url)
+        return HttpResponseRedirect(url)
