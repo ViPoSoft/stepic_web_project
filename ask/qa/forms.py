@@ -36,4 +36,4 @@ class AnswerForm(forms.Form) :
 	def save(self) :
 		answer = Answer.objects.create(text=self.cleaned_data['text'], question=self.cleaned_data['question'])
 		#answer.save()
-return answer
+                return answer
