@@ -59,11 +59,14 @@ def popular(request) :
 	})
 
 def question(request, quest_id) :
-	try :
-		quest = Question.objects.get(id = quest_id)
-	except Question.DoesNotExist :
-		raise Http404
-	answers = Answer.objects.all().filter(question = quest)
+	if request.method == "POST":
+            return HttpResponse('OK')
+        else
+            try :
+                quest = Question.objects.get(id = quest_id)
+	        except Question.DoesNotExist :
+	        raise Http404
+                answers = Answer.objects.all().filter(question = quest)
 	
 	title = 'qwest ' + quest_id
 	form = AnswerForm(initial{'question' : quest_id})
